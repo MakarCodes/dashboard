@@ -8,7 +8,9 @@ interface IProps {
 
 const Button: React.FC<IProps> = ({ text, bgColor, action }) => (
   <button
-    onClick={() => action()}
+    onClick={() => {
+      action();
+    }}
     className={classes.Btn}
     style={{ backgroundColor: `${bgColor}` }}
   >

@@ -1,0 +1,54 @@
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040;
+  width: 100vw;
+  height: 100vh;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.Wrapper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1050;
+  /* width: 100%;
+  height: 100%; */
+  overflow-x: hidden;
+  overflow-y: auto;
+  outline: 0;
+}
+
+.Modal {
+  z-index: 100;
+  background: white;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 3px;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.ModalClose {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+}
+
+.ModalCloseButton {
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  opacity: 0.3;
+  cursor: pointer;
+  border: none;
+}

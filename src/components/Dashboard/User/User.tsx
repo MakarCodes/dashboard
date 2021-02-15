@@ -5,14 +5,25 @@ import * as actions from '../../../store/actions/usersActionsCreators';
 
 import Button from '../../Button/Button';
 import classes from './User.module.scss';
+import DeleteButton from '../DeleteButton/DeleteButton';
+import { useCallback } from 'react';
 
 interface IProps {
   user: IUser;
+  handleDeleteClick: (user: IUser) => void;
 }
 
-const User: React.FC<IProps> = ({ user }) => {
+const User: React.FC<IProps> = ({ user, handleDeleteClick }) => {
   const { id, name, username, email, city } = user;
   const dispatch = useDispatch();
+
+  const handleDelete = useCallback(
+    (user: IUser) => {
+      handleDeleteClick(user);
+    },
+    [user, handleDeleteClick]
+  );
+
   return (
     <div className={classes.Container}>
       <div className={`${classes.Detail} ${classes.DetailHiddenS}`}>{id}</div>
@@ -30,10 +41,11 @@ const User: React.FC<IProps> = ({ user }) => {
         </Link>
       </div>
       <div className={classes.Detail}>
+        {/* <DeleteButton handleDeleteClick={handleDeleteClick} user={user} /> */}
         <Button
           text='Delete'
           bgColor='#dc3545'
-          action={() => dispatch(actions.removeUser(id))}
+          action={() => handleDelete(user)}
         />
       </div>
     </div>
