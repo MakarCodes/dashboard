@@ -1,23 +1,30 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../Button/Button';
+import Spinner from '../UI/Spinner/Spinner';
 import classes from './Dashboard.module.scss';
 import Description from './Description/Description';
 import User from './User/User';
 
 const generateUsersList = (users: IUser[]) =>
   users.map(({ id, name, username, email, city }) => (
-    <User id={id} name={name} username={username} city={city} email={email} />
+    <User
+      key={id}
+      id={id}
+      name={name}
+      username={username}
+      city={city}
+      email={email}
+    />
   ));
 
 const Dashboard = () => {
   const users: IUser[] = useSelector((state: IInitialState) => state.users);
+  const isLoading: boolean = useSelector(
+    (state: IInitialState) => state.isLoading
+  );
 
   const userList = useMemo(() => generateUsersList(users), [users]);
-
-  useEffect(() => {
-    console.log(users);
-  }, []);
 
   return (
     <div className={classes.Wrapper}>
@@ -29,10 +36,14 @@ const Dashboard = () => {
           action={() => console.log('hurrey')}
         />
       </div>
-      <div className={classes.Table}>
-        <Description />
-        {userList}
-      </div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className={classes.Table}>
+          <Description />
+          {userList}
+        </div>
+      )}
     </div>
   );
 };
