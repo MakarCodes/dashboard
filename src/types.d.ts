@@ -1,3 +1,13 @@
+interface IFetchData {
+  id: string;
+  name: string;
+  username: string;
+  address: {
+    city: string;
+  };
+  email: string;
+}
+
 interface IUser {
   id: string;
   name: string;

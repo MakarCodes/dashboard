@@ -45,9 +45,17 @@ export const fetchUsers = (url: string) => async (
   dispatch(fetchUsersStart());
   try {
     const response = await fetch(url);
-    const users: IUser[] = await response.json();
-    console.log(users);
-    dispatch(fetchUsersSuccess(users));
+    const users: IFetchData[] = await response.json();
+    const usersToSave: IUser[] = users.map(
+      ({ id, name, username, email, address }) => ({
+        id: id.toString(),
+        name,
+        username,
+        email,
+        city: address.city,
+      })
+    );
+    dispatch(fetchUsersSuccess(usersToSave));
   } catch (error) {
     dispatch(fetchUsersFail());
   }
