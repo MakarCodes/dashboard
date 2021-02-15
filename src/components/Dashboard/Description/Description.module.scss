@@ -2,11 +2,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
   padding: 20px 10px;
-  border: solid 1px #ccc;
-  background-color: transparent;
-  &:nth-child(odd) {
-    background-color: #ccc;
-  }
+  border-bottom: none;
+  background-color: grey;
   @media (min-width: '768px') {
     padding: 20px;
   }
@@ -16,13 +13,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 10px;
+  color: white;
   text-align: center;
+  font-size: 10px;
   @media (min-width: '768px') {
     font-size: 12px;
   }
   @media (min-width: '1024px') {
-    font-size: 16px;
+    font-size: 20px;
+  }
+}
+
+.DetailHiddenM {
+  @media (max-width: '1024px') {
+    display: none;
   }
 }
 
@@ -34,12 +38,6 @@
 
 .DetailHiddenS {
   @media (max-width: '425px') {
-    display: none;
-  }
-}
-
-.DetailHiddenM {
-  @media (max-width: '1200px') {
     display: none;
   }
 }

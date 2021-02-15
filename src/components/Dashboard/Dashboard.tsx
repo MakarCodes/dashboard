@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import classes from './Dashboard.module.scss';
+import Description from './Description/Description';
 import User from './User/User';
 
 const generateUsersList = (users: IUser[]) =>
@@ -28,7 +29,10 @@ const Dashboard = () => {
           action={() => console.log('hurrey')}
         />
       </div>
-      <div className={classes.Table}>{userList}</div>
+      <div className={classes.Table}>
+        <Description />
+        {userList}
+      </div>
     </div>
   );
 };
