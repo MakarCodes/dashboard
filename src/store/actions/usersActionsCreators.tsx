@@ -8,6 +8,7 @@ import {
   RemoveUserAction,
   EditUserAction,
   Actions,
+  SetEditUserAction,
 } from '../reducers/usersReducer';
 
 const fetchUsersStart: ActionCreator<FetchStartAction> = () => ({
@@ -33,6 +34,12 @@ export const addUser: ActionCreator<AddUserAction> = (
 export const removeUser: ActionCreator<RemoveUserAction> = (id: string) => ({
   type: ActionTypes.REMOVE_USER,
   payload: { id },
+});
+export const setEditedUser: ActionCreator<SetEditUserAction> = (
+  user: IUser
+) => ({
+  type: ActionTypes.SET_EDITED_USER,
+  payload: { user },
 });
 export const editUser: ActionCreator<EditUserAction> = (user: IUser) => ({
   type: ActionTypes.EDIT_USER,

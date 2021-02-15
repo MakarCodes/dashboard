@@ -13,6 +13,7 @@ export enum ActionTypes {
   FETCHING_DATA_FAIL = 'FETCHING_DATA_FAIL',
   ADD_USER = 'ADD_USER',
   REMOVE_USER = 'REMOVE_USER',
+  SET_EDITED_USER = 'SET_EDITED_USER',
   EDIT_USER = 'EDIT_USER',
 }
 
@@ -34,6 +35,10 @@ export type RemoveUserAction = {
   type: 'REMOVE_USER';
   payload: { id: string };
 };
+export type SetEditUserAction = {
+  type: 'SET_EDITED_USER';
+  payload: { user: IUser };
+};
 export type EditUserAction = {
   type: 'EDIT_USER';
   payload: { user: IUser };
@@ -45,6 +50,7 @@ export type Actions =
   | FetchFailAction
   | AddUserAction
   | RemoveUserAction
+  | SetEditUserAction
   | EditUserAction;
 
 const usersReducer = (state: IInitialState = initialState, action: Actions) => {
@@ -71,11 +77,13 @@ const usersReducer = (state: IInitialState = initialState, action: Actions) => {
         (user: IUser) => user.id !== action.payload.id
       );
       return { ...state, users: usersAfterRemoval };
+    case ActionTypes.SET_EDITED_USER:
+      return { ...state, editUser: action.payload.user };
     case ActionTypes.EDIT_USER:
       const updatedUsers = state.users.map((user: IUser) => {
         return user.id === action.payload.user.id ? action.payload.user : user;
       });
-      return { ...state, users: updatedUsers };
+      return { ...state, users: updatedUsers, editUser: null };
     default:
       return state;
   }

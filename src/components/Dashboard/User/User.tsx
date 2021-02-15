@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import * as actions from '../../../store/actions/usersActionsCreators';
 
@@ -20,11 +21,13 @@ const User: React.FC<IProps> = ({ user }) => {
       <div className={`${classes.Detail} ${classes.DetailHidden}`}>{email}</div>
       <div className={`${classes.Detail} ${classes.DetailHiddenM}`}>{city}</div>
       <div className={classes.Detail}>
-        <Button
-          text='Edit'
-          bgColor='#ffc107'
-          action={() => dispatch(actions.editUser(user))}
-        />
+        <Link to='/form'>
+          <Button
+            text='Edit'
+            bgColor='#ffc107'
+            action={() => dispatch(actions.setEditedUser(user))}
+          />
+        </Link>
       </div>
       <div className={classes.Detail}>
         <Button

@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from './validationSchema';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import classes from './Form.module.scss';
@@ -13,24 +13,32 @@ interface IDataFromForm {
 }
 
 const Form = () => {
+  const editUser = useSelector((state: IInitialState) => state.editUser);
   const dispatch = useDispatch();
   const history = useHistory();
   const { register, handleSubmit, errors, setValue } = useForm({
     resolver: yupResolver(schema),
     mode: 'all',
   });
-  const onSubmit = (data: IDataFromForm) => {
-    const { name, email } = data;
-    dispatch(actions.addUser(name, email));
+
+  const resetForm = () => {
     setValue('name', '');
     setValue('email', '');
     history.push('/');
   };
+  const onSubmit = (data: IDataFromForm) => {
+    const { name, email } = data;
+    if (editUser) {
+      const userAfterEdit = { ...editUser, name, email };
+      dispatch(actions.editUser(userAfterEdit));
+    } else {
+      dispatch(actions.addUser(name, email));
+    }
+    resetForm();
+  };
 
   const handleCancel = () => {
-    setValue('name', '');
-    setValue('email', '');
-    history.push('/');
+    resetForm();
   };
 
   return (
@@ -44,7 +52,7 @@ const Form = () => {
             ref={register}
             name='name'
             type='text'
-            defaultValue=''
+            defaultValue={editUser ? editUser.name : ''}
             placeholder='User name...'
           />
           {errors.name && (
@@ -58,7 +66,7 @@ const Form = () => {
             ref={register}
             name='email'
             type='text'
-            defaultValue=''
+            defaultValue={editUser ? editUser.email : ''}
             placeholder='Email...'
           />
           {errors.email && (
@@ -67,6 +75,7 @@ const Form = () => {
         </div>
         <div className={classes.ButtonsContainer}>
           <button
+            type='button'
             onClick={() => handleCancel()}
             className={`${classes.Btn} ${classes.Cancel}`}
           >

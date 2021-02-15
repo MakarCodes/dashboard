@@ -30,7 +30,7 @@ const Dashboard = () => {
           <Button
             text='Add new'
             bgColor='#007bff'
-            action={() => dispatch(actions.addUser)}
+            action={() => dispatch(actions.setEditedUser(null))}
           />
         </Link>
       </div>
