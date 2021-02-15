@@ -1,7 +1,12 @@
-import React from 'react';
+import classes from './Dashboard.module.scss';
 
 const Dashboard = () => {
-  return <div>dashboard</div>;
+  return (
+    <div className={classes.Wrapper}>
+      <div>navbar</div>
+      <div>users container</div>
+    </div>
+  );
 };
 
 export default Dashboard;
