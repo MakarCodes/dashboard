@@ -7,6 +7,7 @@ import {
   AddUserAction,
   RemoveUserAction,
   EditUserAction,
+  Actions,
 } from '../reducers/usersReducer';
 
 const fetchUsersStart: ActionCreator<FetchStartAction> = () => ({
@@ -39,7 +40,7 @@ export const editUser: ActionCreator<EditUserAction> = (user: IUser) => ({
 });
 
 export const fetchUsers = (url: string) => async (
-  dispatch: React.Dispatch<any>
+  dispatch: React.Dispatch<Actions>
 ) => {
   dispatch(fetchUsersStart());
   try {

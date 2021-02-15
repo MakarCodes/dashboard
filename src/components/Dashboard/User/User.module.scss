@@ -1,0 +1,16 @@
+.Container {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
+  padding: 20px;
+  border: solid 1px #ccc;
+  background-color: transparent;
+  &:nth-child(odd) {
+    background-color: #ccc;
+  }
+}
+
+.Detail {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
