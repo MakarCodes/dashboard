@@ -1,0 +1,27 @@
+.Wrapper {
+  background-color: transparent;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 10px;
+  @media (min-width: '768px') {
+    padding: 50px 20px;
+  }
+}
+
+.InnerWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  @media (min-width: '768px') {
+    font-size: 48px;
+    margin-bottom: 40px;
+  }
+}
