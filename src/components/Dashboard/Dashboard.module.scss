@@ -30,3 +30,14 @@
 .Table {
   width: 100%;
 }
+
+.Info {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin: 20px auto;
+  @media (min-width: '768px') {
+    font-size: 20px;
+    margin: 40px auto;
+  }
+}

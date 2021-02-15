@@ -39,7 +39,13 @@ const Dashboard = () => {
       ) : (
         <div className={classes.Table}>
           <Description />
-          {userList}
+          {users.length ? (
+            userList
+          ) : (
+            <p className={classes.Info}>
+              Sorry, there are no more users in the database.
+            </p>
+          )}
         </div>
       )}
     </div>

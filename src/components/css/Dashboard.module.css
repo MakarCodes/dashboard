@@ -1,0 +1,62 @@
+.Wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 6px;
+  border: solid 1px #ccc;
+  -webkit-box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+@media (min-width: 768px) {
+  .Wrapper {
+    padding: 15px;
+  }
+}
+
+.TitleBar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 768px) {
+  .TitleBar {
+    margin-bottom: 40px;
+  }
+}
+
+.Title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+@media (min-width: 768px) {
+  .Title {
+    font-size: 28px;
+  }
+}
+
+.Table {
+  width: 100%;
+}
+
+.Info {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin: 20px auto;
+}
+
+@media (min-width: 768px) {
+  .Info {
+    font-size: 20px;
+    margin: 40px auto;
+  }
+}
