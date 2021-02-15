@@ -1,26 +1,40 @@
-import { ActionTypes } from '../reducers/usersReducer';
+import { ActionCreator } from 'redux';
+import {
+  ActionTypes,
+  FetchStartAction,
+  FetchSuccessAction,
+  FetchFailAction,
+  AddUserAction,
+  RemoveUserAction,
+  EditUserAction,
+} from '../reducers/usersReducer';
 
-const fetchUsersStart = () => ({
+const fetchUsersStart: ActionCreator<FetchStartAction> = () => ({
   type: ActionTypes.FETCHING_DATA_START,
 });
-const fetchUsersSuccess = (users: IUser[]) => ({
+const fetchUsersSuccess: ActionCreator<FetchSuccessAction> = (
+  users: IUser[]
+) => ({
   type: ActionTypes.FETCHING_DATA_SUCCESS,
   payload: { users },
 });
-const fetchUsersFail = () => ({
+const fetchUsersFail: ActionCreator<FetchFailAction> = () => ({
   type: ActionTypes.FETCHING_DATA_FAIL,
 });
 
-const addUser = (name: string, email: string) => ({
+export const addUser: ActionCreator<AddUserAction> = (
+  name: string,
+  email: string
+) => ({
   type: ActionTypes.ADD_USER,
   payload: { name, email },
 });
-const removeUser = (id: string) => ({
-  type: ActionTypes.ADD_USER,
+export const removeUser: ActionCreator<RemoveUserAction> = (id: string) => ({
+  type: ActionTypes.REMOVE_USER,
   payload: { id },
 });
-const editUser = () => (user: IUser) => ({
-  type: ActionTypes.ADD_USER,
+export const editUser: ActionCreator<EditUserAction> = (user: IUser) => ({
+  type: ActionTypes.EDIT_USER,
   payload: { user },
 });
 

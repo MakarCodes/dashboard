@@ -1,10 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-interface IInitialState {
-  users: IUser[];
-  editUser: IUser | null;
-  isLoading: boolean;
-  error: boolean;
-}
+
 export const initialState: IInitialState = {
   users: [],
   editUser: null,
@@ -21,29 +16,36 @@ export enum ActionTypes {
   EDIT_USER = 'EDIT_USER',
 }
 
+export type FetchStartAction = {
+  type: 'FETCHING_DATA_START';
+};
+export type FetchSuccessAction = {
+  type: 'FETCHING_DATA_SUCCESS';
+  payload: { users: IUser[] };
+};
+export type FetchFailAction = {
+  type: 'FETCHING_DATA_FAIL';
+};
+export type AddUserAction = {
+  type: 'ADD_USER';
+  payload: { name: string; email: string };
+};
+export type RemoveUserAction = {
+  type: 'REMOVE_USER';
+  payload: { id: string };
+};
+export type EditUserAction = {
+  type: 'EDIT_USER';
+  payload: { user: IUser };
+};
+
 export type Actions =
-  | {
-      type: 'FETCHING_DATA_START';
-    }
-  | {
-      type: 'FETCHING_DATA_SUCCESS';
-      payload: { users: IUser[] };
-    }
-  | {
-      type: 'FETCHING_DATA_FAIL';
-    }
-  | {
-      type: 'ADD_USER';
-      payload: { name: string; email: string };
-    }
-  | {
-      type: 'REMOVE_USER';
-      payload: { id: string };
-    }
-  | {
-      type: 'EDIT_USER';
-      payload: { user: IUser };
-    };
+  | FetchStartAction
+  | FetchSuccessAction
+  | FetchFailAction
+  | AddUserAction
+  | RemoveUserAction
+  | EditUserAction;
 
 const usersReducer = (state: IInitialState = initialState, action: Actions) => {
   switch (action.type) {
