@@ -1,8 +1,17 @@
-import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import * as actions from '../../../store/actions/usersActionsCreators';
+
 import Button from '../../Button/Button';
 import classes from './User.module.scss';
 
-const User: React.FC<IUser> = ({ id, name, username, email, city }) => {
+interface IProps {
+  user: IUser;
+}
+
+const User: React.FC<IProps> = ({ user }) => {
+  const { id, name, username, email, city } = user;
+  const dispatch = useDispatch();
   return (
     <div className={classes.Container}>
       <div className={`${classes.Detail} ${classes.DetailHiddenS}`}>{id}</div>
@@ -14,14 +23,14 @@ const User: React.FC<IUser> = ({ id, name, username, email, city }) => {
         <Button
           text='Edit'
           bgColor='#ffc107'
-          action={() => console.log('edit')}
+          action={() => dispatch(actions.editUser(user))}
         />
       </div>
       <div className={classes.Detail}>
         <Button
           text='Delete'
           bgColor='#dc3545'
-          action={() => console.log('delete')}
+          action={() => dispatch(actions.removeUser(id))}
         />
       </div>
     </div>
