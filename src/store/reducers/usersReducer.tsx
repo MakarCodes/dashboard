@@ -13,12 +13,25 @@ export const initialState: IInitialState = {
 };
 
 export enum ActionTypes {
+  FETCHING_DATA_START = 'FETCHING_DATA_START',
+  FETCHING_DATA_SUCCESS = 'FETCHING_DATA_SUCCESS',
+  FETCHING_DATA_FAIL = 'FETCHING_DATA_FAIL',
   ADD_USER = 'ADD_USER',
   REMOVE_USER = 'REMOVE_USER',
   EDIT_USER = 'EDIT_USER',
 }
 
 export type Actions =
+  | {
+      type: 'FETCHING_DATA_START';
+    }
+  | {
+      type: 'FETCHING_DATA_SUCCESS';
+      payload: { users: IUser[] };
+    }
+  | {
+      type: 'FETCHING_DATA_FAIL';
+    }
   | {
       type: 'ADD_USER';
       payload: { name: string; email: string };
@@ -34,6 +47,12 @@ export type Actions =
 
 const usersReducer = (state: IInitialState = initialState, action: Actions) => {
   switch (action.type) {
+    case ActionTypes.FETCHING_DATA_START:
+      return { ...state, isLoading: true };
+    case ActionTypes.FETCHING_DATA_SUCCESS:
+      return { ...state, isLoading: false, users: action.payload.users };
+    case ActionTypes.FETCHING_DATA_FAIL:
+      return { ...state, isLoading: false, error: true };
     case ActionTypes.ADD_USER:
       const newUser = {
         id: uuidv4(),

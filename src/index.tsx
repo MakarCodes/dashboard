@@ -1,14 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+
 import 'normalize.css';
 import './index.css';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
 import usersReducer from './store/reducers/usersReducer';
 
-const store = createStore(usersReducer);
+const store = createStore(usersReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <React.StrictMode>
