@@ -1,11 +1,18 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../Button/Button';
 import classes from './Dashboard.module.scss';
 import User from './User/User';
 
+const generateUsersList = (users: IUser[]) =>
+  users.map(({ id, name, username, email, city }) => (
+    <User id={id} name={name} username={username} city={city} email={email} />
+  ));
+
 const Dashboard = () => {
   const users: IUser[] = useSelector((state: IInitialState) => state.users);
+
+  const userList = useMemo(() => generateUsersList(users), [users]);
 
   useEffect(() => {
     console.log(users);
@@ -21,17 +28,7 @@ const Dashboard = () => {
           action={() => console.log('hurrey')}
         />
       </div>
-      <div className={classes.Table}>
-        {users.map(user => (
-          <User
-            id={user.id}
-            name={user.name}
-            username={user.username}
-            city={user.city}
-            email={user.email}
-          />
-        ))}
-      </div>
+      <div className={classes.Table}>{userList}</div>
     </div>
   );
 };
