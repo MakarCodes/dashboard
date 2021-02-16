@@ -4,6 +4,7 @@ Simple CRUD application which include:
 
 - fetching users from API (with loading and error handling)
 - adding/removing/editing users
+- users sorting by username
 - making POST, DELETE requests
 - global state management with Redux
 - UI elements - modal, spinner
@@ -19,7 +20,7 @@ Project is created with:
 
 ## Live
 
-<a href="https://makarcodes.github.io/dashboard">Dashboard Live</a>
+<a href="https://makarcodes.github.io/dashboard/">Dashboard Live</a>
 
 ## Setup
 
