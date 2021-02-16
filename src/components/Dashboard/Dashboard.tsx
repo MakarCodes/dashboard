@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -27,6 +27,7 @@ const Dashboard = () => {
   const isLoading: boolean = useSelector(
     (state: IInitialState) => state.isLoading
   );
+  const error: boolean = useSelector((state: IInitialState) => state.error);
   const userForRemoval = useSelector(
     (state: IInitialState) => state.userForRemoval
   );
@@ -74,6 +75,11 @@ const Dashboard = () => {
             <Description />
             {users.length ? (
               userList
+            ) : error ? (
+              <p className={classes.Info}>
+                Sorry, data couldn't be loaded - please try later or check your
+                url
+              </p>
             ) : (
               <p className={classes.Info}>
                 Sorry, there are no more users in the database.
