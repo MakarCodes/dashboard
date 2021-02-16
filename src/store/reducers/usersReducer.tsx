@@ -18,6 +18,7 @@ export enum ActionTypes {
   SET_EDITED_USER = 'SET_EDITED_USER',
   EDIT_USER = 'EDIT_USER',
   SET_USER_TO_REMOVE = 'SET_USER_TO_REMOVE',
+  SORT_USERS = 'SORT_USERS',
 }
 
 export type FetchStartAction = {
@@ -50,6 +51,9 @@ export type SetUserToRemoveAction = {
   type: 'SET_USER_TO_REMOVE';
   payload: { user: IUser };
 };
+export type SortUsersAction = {
+  type: 'SORT_USERS';
+};
 
 export type Actions =
   | FetchStartAction
@@ -59,7 +63,8 @@ export type Actions =
   | RemoveUserAction
   | SetEditUserAction
   | EditUserAction
-  | SetUserToRemoveAction;
+  | SetUserToRemoveAction
+  | SortUsersAction;
 
 const fetchUsersStart = (state: IInitialState, action: FetchStartAction) => {
   return updateObject(state, {
@@ -127,6 +132,14 @@ const editUser = (state: IInitialState, action: EditUserAction) => {
   });
 };
 
+const sortUsers = (state: IInitialState, action: SortUsersAction) => {
+  const sortUsers = [...state.users];
+  sortUsers.sort((a, b) => a.username.localeCompare(b.username));
+  return updateObject(state, {
+    users: sortUsers,
+  });
+};
+
 const usersReducer = (state: IInitialState = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypes.FETCHING_DATA_START:
@@ -145,6 +158,8 @@ const usersReducer = (state: IInitialState = initialState, action: Actions) => {
       return setEditedUser(state, action);
     case ActionTypes.EDIT_USER:
       return editUser(state, action);
+    case ActionTypes.SORT_USERS:
+      return sortUsers(state, action);
     default:
       return state;
   }

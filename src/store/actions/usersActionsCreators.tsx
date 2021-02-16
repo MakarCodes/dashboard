@@ -10,6 +10,7 @@ import {
   Actions,
   SetEditUserAction,
   SetUserToRemoveAction,
+  SortUsersAction,
 } from '../reducers/usersReducer';
 
 const fetchUsersStart: ActionCreator<FetchStartAction> = () => ({
@@ -52,6 +53,9 @@ export const editUser: ActionCreator<EditUserAction> = (user: IUser) => ({
   type: ActionTypes.EDIT_USER,
   payload: { user },
 });
+export const sortUsers: ActionCreator<SortUsersAction> = () => ({
+  type: ActionTypes.SORT_USERS,
+});
 
 export const fetchUsers = (url: string) => async (
   dispatch: React.Dispatch<Actions>
@@ -73,4 +77,44 @@ export const fetchUsers = (url: string) => async (
   } catch (error) {
     dispatch(fetchUsersFail());
   }
+};
+
+// export const sendUser = (user: IUser, url: string) => async (
+//   dispatch: React.Dispatch<Actions>
+// ) => {
+//   dispatch(fetchUsersStart()); // start sending
+//   try {
+//     const response = await   fetch(url, {
+//       method: 'POST',
+//       headers: {
+//         Accept: 'application/json',
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify(data),
+//     })
+//     const user = await response.json();
+//     dispatch(addUser(name, email));
+//   } catch (error) {
+//     dispatch(fetchUsersFail());
+//   }
+// };
+
+const sendUser = (data: IUser, url: string) => {
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(response => response.json())
+    .then(data => {
+      // tutaj nie ma zadnej data
+      console.log('Success:', data);
+    })
+    .catch(error => {
+      // tutaj nie czyta errora
+      console.error('Error:', error);
+    });
 };
