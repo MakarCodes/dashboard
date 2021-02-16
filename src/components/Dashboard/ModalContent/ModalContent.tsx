@@ -1,9 +1,13 @@
+import { useDispatch } from 'react-redux';
+
+import { deleteUser } from '../../../store/actions/usersActionsCreators';
+
+import { USERS_URL } from '../../../constans';
 import * as actions from '../../../store/actions/usersActionsCreators';
 
 import classes from './ModalContent.module.scss';
 
 import Button from '../../Button/Button';
-import { useDispatch } from 'react-redux';
 
 interface IProps {
   userForRemoval: IUser;
@@ -19,6 +23,7 @@ const ModalContent: React.FC<IProps> = ({
   const handleDelete = () => {
     dispatch(actions.removeUser(userForRemoval.id));
     toggleVisibility();
+    deleteUser(USERS_URL, userForRemoval);
   };
   const handleCancelDelete = () => {
     toggleVisibility();

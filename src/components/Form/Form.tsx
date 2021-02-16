@@ -7,6 +7,8 @@ import { useHistory } from 'react-router';
 import classes from './Form.module.scss';
 
 import * as actions from '../../store/actions/usersActionsCreators';
+import { USERS_URL } from '../../constans';
+import { sendUser } from '../../store/actions/usersActionsCreators';
 interface IDataFromForm {
   name: string;
   email: string;
@@ -31,8 +33,11 @@ const Form = () => {
     if (editUser) {
       const userAfterEdit = { ...editUser, name, email };
       dispatch(actions.editUser(userAfterEdit));
+      sendUser(userAfterEdit, USERS_URL);
     } else {
+      const newUser = { name, email, id: '', city: '', username: '' };
       dispatch(actions.addUser(name, email));
+      sendUser(newUser, USERS_URL);
     }
     resetForm();
   };

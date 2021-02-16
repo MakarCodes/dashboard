@@ -91,13 +91,13 @@ const addUser = (state: IInitialState, action: AddUserAction) => {
     id: uuidv4(),
     name: action.payload.name,
     email: action.payload.email,
-    username: '',
-    city: '',
+    username: 'no-name',
+    city: 'no-city',
   };
-  const users = state.users;
-  users.push(newUser);
+  const updatedUsers = [...state.users];
+  updatedUsers.push(newUser);
   return updateObject(state, {
-    users,
+    users: updatedUsers,
   });
 };
 const setUserToRemove = (
