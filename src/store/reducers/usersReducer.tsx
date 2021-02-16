@@ -1,8 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
+import { updateObject } from '../../utilities/updateObject';
 
 export const initialState: IInitialState = {
   users: [],
   editUser: null,
+  userForRemoval: null,
   isLoading: false,
   error: false,
 };
@@ -15,6 +17,7 @@ export enum ActionTypes {
   REMOVE_USER = 'REMOVE_USER',
   SET_EDITED_USER = 'SET_EDITED_USER',
   EDIT_USER = 'EDIT_USER',
+  SET_USER_TO_REMOVE = 'SET_USER_TO_REMOVE',
 }
 
 export type FetchStartAction = {
@@ -43,6 +46,10 @@ export type EditUserAction = {
   type: 'EDIT_USER';
   payload: { user: IUser };
 };
+export type SetUserToRemoveAction = {
+  type: 'SET_USER_TO_REMOVE';
+  payload: { user: IUser };
+};
 
 export type Actions =
   | FetchStartAction
@@ -51,39 +58,93 @@ export type Actions =
   | AddUserAction
   | RemoveUserAction
   | SetEditUserAction
-  | EditUserAction;
+  | EditUserAction
+  | SetUserToRemoveAction;
+
+const fetchUsersStart = (state: IInitialState, action: FetchStartAction) => {
+  return updateObject(state, {
+    isLoading: true,
+  });
+};
+const fetchUsersSuccess = (
+  state: IInitialState,
+  action: FetchSuccessAction
+) => {
+  return updateObject(state, {
+    isLoading: false,
+    users: action.payload.users,
+  });
+};
+const fetchUsersFail = (state: IInitialState, action: FetchFailAction) => {
+  return updateObject(state, {
+    isLoading: false,
+    error: true,
+  });
+};
+const addUser = (state: IInitialState, action: AddUserAction) => {
+  const newUser = {
+    id: uuidv4(),
+    name: action.payload.name,
+    email: action.payload.email,
+    username: '',
+    city: '',
+  };
+  const users = state.users;
+  users.push(newUser);
+  return updateObject(state, {
+    users,
+  });
+};
+const setUserToRemove = (
+  state: IInitialState,
+  action: SetUserToRemoveAction
+) => {
+  return updateObject(state, {
+    userForRemoval: action.payload.user,
+  });
+};
+const removeUser = (state: IInitialState, action: RemoveUserAction) => {
+  const usersAfterRemoval = state.users.filter(
+    (user: IUser) => user.id !== action.payload.id
+  );
+  return updateObject(state, {
+    users: usersAfterRemoval,
+    userForRemoval: null,
+  });
+};
+const setEditedUser = (state: IInitialState, action: SetEditUserAction) => {
+  return updateObject(state, {
+    editUser: action.payload.user,
+  });
+};
+const editUser = (state: IInitialState, action: EditUserAction) => {
+  const updatedUsers = state.users.map((user: IUser) => {
+    return user.id === action.payload.user.id ? action.payload.user : user;
+  });
+  return updateObject(state, {
+    users: updatedUsers,
+    editUser: null,
+  });
+};
 
 const usersReducer = (state: IInitialState = initialState, action: Actions) => {
   switch (action.type) {
     case ActionTypes.FETCHING_DATA_START:
-      return { ...state, isLoading: true };
+      return fetchUsersStart(state, action);
     case ActionTypes.FETCHING_DATA_SUCCESS:
-      return { ...state, isLoading: false, users: action.payload.users };
+      return fetchUsersSuccess(state, action);
     case ActionTypes.FETCHING_DATA_FAIL:
-      return { ...state, isLoading: false, error: true };
+      return fetchUsersFail(state, action);
     case ActionTypes.ADD_USER:
-      const newUser = {
-        id: uuidv4(),
-        name: action.payload.name,
-        email: action.payload.email,
-        username: '',
-        city: '',
-      };
-      const users = state.users;
-      users.push(newUser);
-      return { ...state, users };
+      return addUser(state, action);
+    case ActionTypes.SET_USER_TO_REMOVE:
+      return setUserToRemove(state, action);
     case ActionTypes.REMOVE_USER:
-      const usersAfterRemoval = state.users.filter(
-        (user: IUser) => user.id !== action.payload.id
-      );
-      return { ...state, users: usersAfterRemoval };
+      return removeUser(state, action);
     case ActionTypes.SET_EDITED_USER:
-      return { ...state, editUser: action.payload.user };
+      return setEditedUser(state, action);
     case ActionTypes.EDIT_USER:
-      const updatedUsers = state.users.map((user: IUser) => {
-        return user.id === action.payload.user.id ? action.payload.user : user;
-      });
-      return { ...state, users: updatedUsers, editUser: null };
+      return editUser(state, action);
     default:
       return state;
   }

@@ -6,30 +6,34 @@ import Button from '../../Button/Button';
 import { useDispatch } from 'react-redux';
 
 interface IProps {
-  userToDelete: IUser;
+  userForRemoval: IUser;
   toggleVisibility: () => void;
-  setUserToDelete: React.Dispatch<React.SetStateAction<IUser | undefined>>;
 }
 
 const ModalContent: React.FC<IProps> = ({
-  userToDelete,
+  userForRemoval,
   toggleVisibility,
-  setUserToDelete,
 }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(actions.removeUser(userToDelete.id));
+    dispatch(actions.removeUser(userForRemoval.id));
     toggleVisibility();
-    setUserToDelete(undefined);
+  };
+  const handleCancelDelete = () => {
+    toggleVisibility();
+    dispatch(actions.setUserToRemove(null));
   };
   return (
     <div className={classes.Wrapper}>
       <h2 className={classes.Title}>Delete</h2>
       <p className={classes.Question}>
-        Do You want to delete user - {userToDelete.name}?
+        Do You want to delete user - {userForRemoval.name}?
       </p>
-      <Button text='Delete' action={handleDelete} bgColor='#dc3545' />
+      <div style={{ textAlign: 'right' }}>
+        <Button text='Delete' action={handleDelete} bgColor='#dc3545' />
+        <Button text='Cancel' action={handleCancelDelete} bgColor='grey' />
+      </div>
     </div>
   );
 };

@@ -16,6 +16,9 @@
   line-height: 1.5;
   border-radius: 0.25rem;
   width: 65px;
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
   @media (min-width: '768px') {
     width: 100px;
     padding: 0.375rem 0;

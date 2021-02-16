@@ -27,16 +27,17 @@ const Dashboard = () => {
   const isLoading: boolean = useSelector(
     (state: IInitialState) => state.isLoading
   );
-
-  const [userToDelete, setUserToDelete] = useState<IUser>();
+  const userForRemoval = useSelector(
+    (state: IInitialState) => state.userForRemoval
+  );
   const { isVisible, toggleVisibility } = useModalLogic();
 
   const handleDeleteClick = useCallback(
     (user: IUser) => {
       toggleVisibility();
-      setUserToDelete(user);
+      dispatch(actions.setUserToRemove(user));
     },
-    [userToDelete]
+    [userForRemoval]
   );
 
   const userList = useMemo(() => generateUsersList(users, handleDeleteClick), [
@@ -47,11 +48,10 @@ const Dashboard = () => {
     <>
       {isVisible && (
         <Modal isVisible={isVisible} toggleVisibility={toggleVisibility}>
-          {userToDelete && (
+          {userForRemoval && (
             <ModalContent
-              userToDelete={userToDelete}
+              userForRemoval={userForRemoval}
               toggleVisibility={toggleVisibility}
-              setUserToDelete={setUserToDelete}
             />
           )}
         </Modal>

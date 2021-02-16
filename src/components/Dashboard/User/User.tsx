@@ -5,7 +5,6 @@ import * as actions from '../../../store/actions/usersActionsCreators';
 
 import Button from '../../Button/Button';
 import classes from './User.module.scss';
-import DeleteButton from '../DeleteButton/DeleteButton';
 import { useCallback } from 'react';
 
 interface IProps {
@@ -41,7 +40,6 @@ const User: React.FC<IProps> = ({ user, handleDeleteClick }) => {
         </Link>
       </div>
       <div className={classes.Detail}>
-        {/* <DeleteButton handleDeleteClick={handleDeleteClick} user={user} /> */}
         <Button
           text='Delete'
           bgColor='#dc3545'

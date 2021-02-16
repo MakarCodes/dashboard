@@ -19,6 +19,7 @@ interface IUser {
 interface IInitialState {
   users: IUser[];
   editUser: IUser | null;
+  userForRemoval: IUser | null;
   isLoading: boolean;
   error: boolean;
 }
